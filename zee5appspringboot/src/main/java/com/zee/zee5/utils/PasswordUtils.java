@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class PasswordUtils {
 
 		
-	  private static  final Random RANDOM = new SecureRandom();
+	    private static  final Random RANDOM = new SecureRandom();
 		
 	    private static  final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		
@@ -27,8 +27,6 @@ public class PasswordUtils {
 		
 	    private static final int KEY_LENGTH = 256;
 	    
-//	    @Bean(name="ds")
-//	    @Scope("singleton")
 	     public  String getSalt(int length) {
 	        StringBuilder returnValue = new StringBuilder(length);
 	        for (int i = 0; i < length; i++) {
@@ -49,8 +47,6 @@ public class PasswordUtils {
 	        }
 	    }
 	    
-//	    @Bean()
-//	    @Scope("singleton")
 	    public  String generateSecurePassword(String password, String salt) {
 	        String returnValue = null;
 	        byte[] securePassword = hash(password.toCharArray(), salt.getBytes());

@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
+import org.springframework.stereotype.Service;
+
 import com.zee.zee5.dto.Movie;
 import com.zee.zee5.dto.Series;
 import com.zee.zee5.exeption.IdNotFound;
 
+@Service
 public interface SeriesService {
 
 	public String addSeries(Series series);

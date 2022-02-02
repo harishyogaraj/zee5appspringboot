@@ -4,10 +4,18 @@ package com.zee.zee5.dto;
 import java.sql.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.zee.zee5.exeption.InvalidAmountException;
 import com.zee.zee5.exeption.InvalidIdLengthException;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,24 +26,42 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode
 @ToString
+@Entity
+@AllArgsConstructor
+@Table(name="subscription")
 public class Subscription {
 
 	public Subscription() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Setter(value=AccessLevel.NONE)
+	@NotBlank
 	private String regid;
 	
-	@Setter(value=AccessLevel.NONE)
+
+	@NotNull
 	private int amount;
 	
+	@NotBlank
 	private String type;
-	private String dateofPurchase;
+	
+	@NotNull
+	private Date dateofPurchase;
+	
+	@NotBlank
 	private String status;
+	
+	@NotBlank
 	private String paymentMode;
+	
+	@NotBlank
 	private String autoRenewal;
-	private String expiryDate;
+	
+	@NotNull
+	private Date expiryDate;
+	
+	@Id
+	@Column(name="subscriptionid")
 	private String subscriptionid;
 	
 	
@@ -75,19 +101,19 @@ public class Subscription {
 		return Objects.hash(amount, autoRenewal, dateofPurchase, expiryDate, regid, paymentMode, status, type);
 	}
 
-	public Subscription(String id, int amount, String type, String dateofPurchase, String status, String paymentMode,
-			String autoRenewal, String expiryDate,String regid) throws InvalidIdLengthException,InvalidAmountException {
-		super();
-		this.setregId(id);
-		this.setAmount(amount);
-		this.type = type;
-		this.dateofPurchase = dateofPurchase;
-		this.status = status;
-		this.paymentMode = paymentMode;
-		this.autoRenewal = autoRenewal;
-		this.expiryDate = expiryDate;
-		this.regid=regid;
-	}
+//	public Subscription(String id, int amount, String type, Date dateofPurchase, String status, String paymentMode,
+//			String autoRenewal, Date expiryDate,String regid) throws InvalidIdLengthException,InvalidAmountException {
+//		super();
+//		this.setregId(id);
+//		this.setAmount(amount);
+//		this.type = type;
+//		this.dateofPurchase = dateofPurchase;
+//		this.status = status;
+//		this.paymentMode = paymentMode;
+//		this.autoRenewal = autoRenewal;
+//		this.expiryDate = expiryDate;
+//		this.regid=regid;
+//	}
 	
 	
 	
