@@ -2,11 +2,15 @@ package com.zee.zee5.dto;
 
 
 import java.sql.Date;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
@@ -14,10 +18,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.zee.zee5.exeption.InvalidIdLengthException;
-import com.zee.zee5.exeption.InvalidNameException;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,45 +34,45 @@ import lombok.ToString;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "seriesname")},name="series")
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "seriesname")},name="series")
+@Table(name="series")
 public class Series implements Comparable<Series> {
 
-	public Series() {
-		// TODO Auto-generated constructor stub
-	}
+
 	
 	//@Setter(value=AccessLevel.NONE)
-	@NotBlank
+//	@NotBlank
 //	@UniqueConstraint
 	private String seriesName;
 	
 	
 	//@Setter(value=AccessLevel.NONE)
-	@NotBlank
+//	@NotBlank
 	private String language;
 	
-	@Setter(value=AccessLevel.NONE)
 	@Id
 	@Column(name="seriesid")
-	@NotBlank
 	private String seriesid;
 	
-	@NotNull
+//	@NotNull
 	@Max(value=70)
 	private int agelimit;
-	@NotBlank
+//	@NotBlank
 	private String cast;
-	@NotBlank
+//	@NotBlank
 	private String genere;	
 	
-	@NotNull
+//	@NotNull
 	@Min(value=1)
 	private int noOfEpisodes;
-	@NotBlank
+//	@NotBlank
 	private String trailer;
-	@NotNull
+//	@NotNull
 	private Date releasedate;
 
+	
+	@OneToMany(mappedBy="series",cascade = CascadeType.ALL)
+	private List<Episode> episodes=new ArrayList<Episode>();	
 	
 //	public Series(String seriesName, String language, String seriesid,
 //			String releasedate,String agelimit,String cast,String genere,
@@ -140,13 +141,34 @@ public class Series implements Comparable<Series> {
 //		return Objects.hash(seriesid, language, seriesName);
 //	}
 	
+public Series() {
+	
+}
 
 
-	@Override
-	public int compareTo(Series o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+
+//public Series( String seriesName,  String language, String seriesid, int agelimit,
+//		String cast, String genere,  int noOfEpisodes, String trailer,
+//		 Date releasedate, List<Episode> episodes) {
+//	super();
+//	this.seriesName = seriesName;
+//	this.language = language;
+//	this.seriesid = seriesid;
+//	this.agelimit = agelimit;
+//	this.cast = cast;
+//	this.genere = genere;
+//	this.noOfEpisodes = noOfEpisodes;
+//	this.trailer = trailer;
+//	this.releasedate = releasedate;
+//	this.episodes = episodes;
+//}
+
+@Override
+public int compareTo(Series o) {
+	// TODO Auto-generated method stub
+	return this.seriesid.compareTo(o.getSeriesid());
+}
 
 	
 }

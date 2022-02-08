@@ -2,18 +2,34 @@ package com.zee.zee5.dto;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zee.zee5.exeption.InvalidIdLengthException;
 import com.zee.zee5.exeption.InvalidNameException;
+import com.zee.zee5.utils.CustomListSerializer;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -58,7 +74,7 @@ public class Register  implements Comparable<Register>
 
 	@Id   // it will consider this as PK
 	@Column(name="regid")
-
+	//@OneToOne(mappedBy="subscription",cascade = CascadeType.ALL)
 	private String id;
 	
 	@Size(max=50)
@@ -77,8 +93,21 @@ public class Register  implements Comparable<Register>
 	@Size(max=100)
 	private String password;
 	
+	//@NotNull
+	private BigInteger contactNumber;
 	
-	private BigDecimal contactNumber;
+	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+//	@JsonIgnore
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler","login"})  //alternate form of @jsonIgnore
+
+//	@JsonSerialize(using = CustomListSerializer.class)
+//	@JoinColumn(name = "regid",nullable=false,foreignKey = @ForeignKey(name="fk_logregId"))
+	private Login login;
+	
+	
+	@OneToOne(mappedBy = "register",cascade = CascadeType.ALL)
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler","subscription"})  //alternate form of @jsonIgnore
+	private Subscription subscription;
 	
 //	public void setemail(String email) throws InvalidNameException {
 //		if(email==null || email=="")
@@ -132,6 +161,13 @@ public class Register  implements Comparable<Register>
 	public int compareTo(Register o) {
 		// TODO Auto-generated method stub
 		return this.id.compareTo(o.getId());
-	
 	}
+	
+	@ManyToMany
+	@JoinTable(name="user_roles",joinColumns = @JoinColumn(name="regId")
+	, inverseJoinColumns = @JoinColumn(name="roleId"))
+	private Set<Role> roles=new HashSet<Role>();
+	
+	
+	
 }

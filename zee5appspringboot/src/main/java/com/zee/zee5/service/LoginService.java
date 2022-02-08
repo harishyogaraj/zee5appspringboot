@@ -1,11 +1,10 @@
 package com.zee.zee5.service;
 
-import javax.management.relation.Role;
 
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5.dto.Login;
-import com.zee.zee5.dto.ROLE;
+import com.zee.zee5.dto.Role;
 
 @Service
 public interface LoginService {
@@ -17,7 +16,7 @@ public interface LoginService {
 	public String changePassword(String userName,String password);
 
 
-	public String changeRole(String userName,ROLE role);
+	public String changeRole(String userName,Role role);
 
 
 

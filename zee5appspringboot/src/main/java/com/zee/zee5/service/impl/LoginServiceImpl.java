@@ -3,13 +3,12 @@ package com.zee.zee5.service.impl;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zee.zee5.dto.Login;
-import com.zee.zee5.dto.ROLE;
+import com.zee.zee5.dto.Role;
 import com.zee.zee5.repository.LoginRepository;
 import com.zee.zee5.service.LoginService;
 import com.zee.zee5.service.UserService;
@@ -19,6 +18,8 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	LoginRepository loginRepository;
+	
+	
 	public LoginServiceImpl() throws IOException{
 		// TODO Auto-generated constructor stub
 		// loginRepository=LoginRepositoryImpl.getInstance();
@@ -29,8 +30,12 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public String addCredentials(Login login) {
 		// TODO Auto-generated method stub
-		//return loginRepository.addCredentials(login);
-		return null;
+		System.out.println(login);
+		Login login2=loginRepository.save(login);
+		System.out.println(login2);
+		if(login2!=null)
+			return "success";
+		return "fail";
 	}
 
 	@Override
@@ -47,12 +52,15 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 	}
 
+
+
 	@Override
-	public String changeRole(String userName, ROLE role) {
+	public String changeRole(String userName, Role role) {
 		// TODO Auto-generated method stub
-	//	return loginRepository.changeRole(userName, role);
 		return null;
 	}
+
+	
 
 		
 	

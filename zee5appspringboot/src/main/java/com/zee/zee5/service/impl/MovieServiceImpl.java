@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.zee.zee5.dto.Movie;
 import com.zee.zee5.dto.Register;
+import com.zee.zee5.exeption.AlreadyExistsException;
 import com.zee.zee5.exeption.IdNotFound;
 import com.zee.zee5.exeption.InvalidIdLengthException;
 import com.zee.zee5.exeption.InvalidNameException;
@@ -20,6 +21,8 @@ import com.zee.zee5.service.MovieService;
 @Service
 public class MovieServiceImpl implements MovieService {
 	
+	
+	
 	@Autowired
 	private MovieRepository movieService;
 	
@@ -28,12 +31,16 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public String addMovie(Movie movie) {
+	public Movie addMovie(Movie movie) throws AlreadyExistsException {
 		// TODO Auto-generated method stub
-		Movie movie1 =movieService.save(movie);
-		if(movie1==null)
-			return "fail";
-		return "success";
+		if(movieService.existsByMovieName(movie.getMovieName())){
+			throw new AlreadyExistsException("this record already existed");
+
+		}
+		Movie movie1=movieService.save(movie);
+		if(movie1!=null)
+			return movie;
+		return null;
 	}
 
 	@Override

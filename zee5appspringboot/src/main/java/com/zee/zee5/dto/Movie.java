@@ -2,24 +2,21 @@ package com.zee.zee5.dto;
 
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.zee.zee5.exeption.InvalidIdLengthException;
-import com.zee.zee5.exeption.InvalidNameException;
+import org.hibernate.validator.internal.constraintvalidators.bv.number.sign.NegativeOrZeroValidatorForByte;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 //import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +25,13 @@ import lombok.ToString;
 
 @Setter
 @Getter
-//@EqualsAndHashCode
+@EqualsAndHashCode
 @ToString
-@AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "movieName")},name="movies")
+@AllArgsConstructor
 
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "movieName")},name="movies")
+@Table(name="movies")
 public class Movie implements Comparable<Movie>{
 	
 	
@@ -72,7 +70,7 @@ public Movie() {
 	@NotBlank
 	private String language;
 	
-	@NotBlank
+	@NotNull
 	@Max(value=70)
 	private int agelimit;
 	@NotBlank
@@ -82,7 +80,9 @@ public Movie() {
 	@NotNull
 	private Date releasedate;
 
-	@NotBlank
+//	@Lob
+//	private byte[] trailer;
+	
 	private String trailer;
 	@NotBlank
 	private String cast;
